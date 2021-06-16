@@ -29,6 +29,11 @@ import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import Formular from "views/examples/Formular";
 
+import './style.scss';
+import ActivateRequest from "views/examples/ActivateRequest";
+import MyRequestDetails from "views/examples/MyRequestDetails";
+import ReclamationForm from "views/examples/ReclamationForm";
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -36,6 +41,18 @@ ReactDOM.render(
       <Route
         path="/landing-page"
         render={(props) => <LandingPage {...props} />}
+      />
+      <Route
+        path="/activate/:id"
+        render={(props) => <ActivateRequest {...props} />}
+      />
+      <Route
+        path="/myrequest"
+        render={(props) => <MyRequestDetails {...props} />}
+      />
+      <Route
+        path="/reclamation"
+        render={(props) => <ReclamationForm {...props} />}
       />
       {/* <Route
         path="/register-page"

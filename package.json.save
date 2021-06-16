@@ -12,6 +12,7 @@
   "bugs": {
     "url": "https://github.com/creativetimofficial/blk-design-system-react/issues"
   },
+ "homepage": "https://demos.creative-tim.com/blk-design-system-react/#/",
   "keywords": [
     "react",
     "reactjs",
@@ -51,9 +52,7 @@
     "react-dom": "17.0.1",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.1",
-    "react-select": "^4.3.1",
     "reactstrap": "8.7.1",
-    "serve": "^12.0.0",
     "sweetalert2": "^11.0.11",
     "sweetalert2-react-content": "^4.0.1",
     "web-vitals": "1.0.1"

@@ -120,14 +120,23 @@ export default function CustomNavbar() {
                   target="_blank"
                 // href="#"
                 >
-                  <i className="tim-icons icon-spaceship" /> Form
-              </Button>
+                  <i className="tim-icons icon-spaceship" /> Appliquer maintennant
+                </Button>
               </Link>
             </NavItem>
             <NavItem>
-              <NavLink href="#">
-                Have an issue?
-              </NavLink>
+              <Link to={'/myrequest'}>
+                <NavLink>
+                  Mon état
+                </NavLink>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to={'/reclamation'}>
+                <NavLink>
+                  Reclamer?
+                </NavLink>
+              </Link>
             </NavItem>
           </Nav>
         </Collapse>

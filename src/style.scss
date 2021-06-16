@@ -1,0 +1,25 @@
+.customizer {
+  .react-select {
+    width: 100%;
+    max-width: 200px;
+
+    .select__menu {
+      z-index: 2;
+    }
+  }
+}
+
+.react-select.is-invalid {
+  .select__control {
+    border-color: red;
+  }
+}
+
+.event-sidebar {
+  .badge:empty {
+    display: inline-block;
+  }
+  .react-select {
+    z-index: 2;
+  }
+}
