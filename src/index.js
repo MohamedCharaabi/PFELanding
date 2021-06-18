@@ -29,7 +29,7 @@ import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import Formular from "views/examples/Formular";
 
-import './style.scss';
+import './style.css';
 import ActivateRequest from "views/examples/ActivateRequest";
 import MyRequestDetails from "views/examples/MyRequestDetails";
 import ReclamationForm from "views/examples/ReclamationForm";
@@ -63,10 +63,10 @@ ReactDOM.render(
         render={(props) => <ProfilePage {...props} />}
       /> */}
       <Route
-        path="/formular"
+        path="/formulair"
         render={(props) => <Formular {...props} />}
       />
-      <Redirect from="/" to="/landing-page" />
+      <Redirect from="/" to="/formulair" />
     </Switch>
   </BrowserRouter>,
   document.getElementById("root")

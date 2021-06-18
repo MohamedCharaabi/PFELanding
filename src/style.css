@@ -1,0 +1,12 @@
+.modal-theme {
+  background-color: #171941 !important;
+}
+
+.input-modal {
+  /* color: #171941; */
+  background-color: #171941;
+}
+
+.input-modal:focus {
+  background-color: #171941;
+}

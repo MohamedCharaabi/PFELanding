@@ -463,7 +463,7 @@ export default function LandingPage() {
                 <hr className="line-info" />
                 <h1>
                   Certains commentaires
-                                    {/* <span className="text-info">that fits your needs</span> */}
+                  {/* <span className="text-info">that fits your needs</span> */}
                 </h1>
               </Col>
             </Row>
@@ -488,8 +488,8 @@ export default function LandingPage() {
                     </Row>
                     <Row>
                       <span style={{ margin: '0 12px' }}>La façon dont vous avez géré la formation a montré de la résilience,
-                      de l'expérience, des connaissances et une pensée critique.
-                      nous sommes ravis pour la prochain formation.</span>
+                        de l'expérience, des connaissances et une pensée critique.
+                        nous sommes ravis pour la prochain formation.</span>
                       {/* <ListGroup>
                         <ListGroupItem>50 messages</ListGroupItem>
                         <ListGroupItem>100 emails</ListGroupItem>
@@ -524,7 +524,7 @@ export default function LandingPage() {
                     </Row>
                     <Row>
                       <span style={{ margin: '0 12px' }}>Excellent travail sur le projet récent. Vos brillantes compétences
-                         en résolution de problèmes nous ont aidés à atteindre nos objectifs beaucoup plus rapidement.</span>
+                        en résolution de problèmes nous ont aidés à atteindre nos objectifs beaucoup plus rapidement.</span>
                       {/* <ListGroup>
                         <ListGroupItem>150 messages</ListGroupItem>
                         <ListGroupItem>1000 emails</ListGroupItem>
@@ -554,7 +554,7 @@ export default function LandingPage() {
                     </Row>
                     <Row>
                       <span style={{ 'margin': '0 12px' }}>Jamais auparavant je n'avais vu un employé aussi dévoué,
-                         travailleur et pourtant tenace à la fois. Vous êtes une inspiration pour nous tous!</span>
+                        travailleur et pourtant tenace à la fois. Vous êtes une inspiration pour nous tous!</span>
                       {/* <ListGroup>
                         <ListGroupItem>350 messages</ListGroupItem>
                         <ListGroupItem>10K emails</ListGroupItem>

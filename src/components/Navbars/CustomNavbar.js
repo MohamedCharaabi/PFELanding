@@ -116,7 +116,7 @@ export default function CustomNavbar() {
               <Link to={'/formular'}>
                 <Button
                   className="nav-link d-none d-lg-block"
-                  color="primary"
+                  // color="primary"
                   target="_blank"
                 // href="#"
                 >

@@ -37,7 +37,8 @@ import {
   InputGroup,
   Container,
   Row,
-  Col
+  Col,
+  Modal, ModalHeader, ModalBody, ModalFooter
 } from "reactstrap";
 
 // core components
@@ -58,10 +59,17 @@ const colourOptions = [
 ]
 
 
-export default function Formular() {
+export default function Formular(props) {
+
+  const {
+    className
+  } = props;
+
+  const [modal, setModal] = useState(false);
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
   const [NameFocus, setNameFocus] = React.useState(false);
+  const [ThemePropFocus, setThemePropFocus] = React.useState(false);
   const [lastNameFocus, setLastNameFocus] = React.useState(false);
   const [emailFocus, setEmailFocus] = React.useState(false);
   // const [professionFocus, setProffesionFocus] = React.useState(false);
@@ -71,12 +79,8 @@ export default function Formular() {
   const [themes, setThemes] = useState([])
   // const [isLoading, setisLoading] = useState(true)
   const [allLevels, setAllLevels] = useState([])
-  const [depOptions, setDepOptions] = useState()
-  const [dirOptions, setDirOptions] = useState()
-  const [divOptions, setDivOptions] = useState()
-  const [departments, setDepartments] = useState([])
-  const [directions, setDirections] = useState([])
-  const [divisions, setDivisions] = useState([])
+  const [showProp, setShowProp] = useState(false)
+  const [themeProp, setThemeProp] = useState('')
 
   const [formData, setFormData] = useState({ nomDem: '', prenomDem: '', emailDem: '', themeDem: '', etatDem: 4, name: 'ser', dep_name: '', dir_name: '', div_name: '', ser_name: '' });
 
@@ -134,6 +138,7 @@ export default function Formular() {
     );
   };
 
+  const toggle = () => setModal(!modal);
 
 
   async function handleSubmit(event) {
@@ -151,22 +156,38 @@ export default function Formular() {
     console.log(formData)
 
   }
+  async function submitThemeProp(event) {
+    event.preventDefault();
+    await axios.post("https://pfe-cims.herokuapp.com/requesttheme", { theme: themeProp, creator: 'personnel' }, {
+      headers: { "Access-Control-Allow-Origin": "*" }
 
+    })
+      .then(res => {
+        return handleSuccess({ props: { title: 'Votre proposition envoyer ', text: 'nous allons le prendre en compte de votre suggestion' } });
+      }).catch(err => handleError({ props: { title: 'Error', text: err.message } }));
+    // alert('Your form submitted Successfully');
+
+
+    console.log(themeProp)
+
+  }
+  const showProposition = () => setShowProp(!showProp)
   if (allLevels.length < 1) {
     return <span></span>
   }
+
   // console.log(allLevels)
   return (
     <>
       <CustomNavbar />
-      <div className="wrapper">
+      <div className="wrapper" style={{ paddingBottom: '250px' }}>
         <div className="page-header">
           <div className="page-header-image" />
           <div className="content">
             <Container>
               <Row>
-                <Col className="offset-lg-0 offset-md-3" lg="5" md="6">
-                  <div
+                <Col className="offset-lg-0 offset-md-3" lg="8" md="6">
+                  {/* <div
                     className="square square-7"
                     id="square7"
                     style={{ transform: squares7and8 }}
@@ -175,226 +196,339 @@ export default function Formular() {
                     className="square square-8"
                     id="square8"
                     style={{ transform: squares7and8 }}
-                  />
+                  /> */}
                   <Card className="card-register">
-                    <CardHeader style={{ marginBottom: '50px' }}>
-                      <CardImg
-                        width={300}
+                    <CardHeader style={{ padding: '10px 30px' }}>
+                      {/* <CardImg
+                        width={400}
                         alt="..."
                         src={require("assets/img/square-purple-1.png").default}
-                      />
-                      <CardTitle tag="h4"></CardTitle>
+                      /> */}
+                      <CardTitle tag={'h3'} >Formulaire Application</CardTitle>
+                      {/* <h2>Formulaire d'pplication</h2> */}
                     </CardHeader>
 
                     <CardBody>
                       <Form className="form" onSubmit={handleSubmit}>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": NameFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Nom"
-                            type="text"
-                            onFocus={(e) => setNameFocus(true)}
-                            onBlur={(e) => setNameFocus(false)}
-                            onChange={val => setFormData({ ...formData, nomDem: val.target.value })}
-
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": lastNameFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-single-02" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Prenom"
-                            type="text"
-                            onFocus={(e) => setLastNameFocus(true)}
-                            onBlur={(e) => setLastNameFocus(false)}
-                            onChange={val => setFormData({ ...formData, prenomDem: val.target.value })}
-
-                          />
-                        </InputGroup>
-                        <InputGroup
-                          className={classnames({
-                            "input-group-focus": emailFocus,
-                          })}
-                        >
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="tim-icons icon-email-85" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Email"
-                            type="email"
-                            onFocus={(e) => setEmailFocus(true)}
-                            onBlur={(e) => setEmailFocus(false)}
-                            onChange={val => setFormData({ ...formData, emailDem: val.target.value })}
-                          />
-                        </InputGroup>
+                        <Row>
 
 
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="nominput">Nom</Label>
+                              <InputGroup
+                                className={classnames({
+                                  "input-group-focus": NameFocus,
+                                })}
 
-                        <FormGroup>
-                          <Label for="exampleSelect">Theme</Label>
-                          <Input type="select" name="select" id="exampleSelect"
-                            // defaultValue={themes[0].name}
+                              >
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="tim-icons icon-single-02" />
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input
+                                  placeholder="Nom"
+                                  type="text"
+                                  id='nominput'
+                                  onFocus={(e) => setNameFocus(true)}
+                                  onBlur={(e) => setNameFocus(false)}
+                                  onChange={val => setFormData({ ...formData, nomDem: val.target.value })}
 
-                            onChange={val => setFormData({ ...formData, themeDem: val.target.value })}
-                          >
-                            {themes.map(theme => {
-                              // console.log(theme)
-                              return <option value={theme.theme}>
-                                {theme.theme}</option>
-                            })}
+                                />
+                              </InputGroup>
+                            </FormGroup>
+                          </Col>
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="prenominput">Prenom</Label>
+                              <InputGroup
+                                className={classnames({
+                                  "input-group-focus": lastNameFocus,
+                                })}
+                              >
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="tim-icons icon-single-02" />
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input
+                                  placeholder="Prenom"
+                                  type="text"
+                                  id='prenominput'
 
+                                  onFocus={(e) => setLastNameFocus(true)}
+                                  onBlur={(e) => setLastNameFocus(false)}
+                                  onChange={val => setFormData({ ...formData, prenomDem: val.target.value })}
 
-                          </Input>
-                        </FormGroup>
+                                />
+                              </InputGroup>
+                            </FormGroup>
+                          </Col>
 
+                          <Col lg={5} >
+                            <FormGroup>
+                              <Label for="emailinput">Email</Label>
+                              <InputGroup
+                                className={classnames({
+                                  "input-group-focus": emailFocus,
+                                })}
+                              >
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="tim-icons icon-email-85" />
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input
+                                  placeholder="Email"
+                                  type="email"
+                                  id='emailinput'
 
-
-                        <FormGroup>
-                          <Label for="exampleSelect">Department</Label>
-                          <Input type="select" name="select" id="exampleSelect"
-                            defaultValue={themes[0].name}
-
-                            onChange={val => setFormData({ ...formData, dep_name: val.target.value, dir_name: '', div_name: '', ser_name: '' })}
-                          >
-                            {allLevels.departments.map(theme => {
-                              // console.log(theme)
-                              return <option value={theme.name}>
-                                {theme.name}</option>
-                            })}
-
-
-                          </Input>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label for="exampleSelect">Direction</Label>
-                          <Input type="select" name="select" id="exampleSelect"
-                            defaultValue={themes[0].name}
-                            onChange={val => setFormData({ ...formData, dir_name: val.target.value, div_name: '', ser_name: '' })}
-                          >
-                            {allLevels.directions.map(dir => {
-                              // console.log(dir)
-                              if (dir.dep_name === formData.dep_name) {
-
-                                return <option value={dir.name}>
-                                  {dir.name}</option>
-                              }
-                              return null
-
-                            })}
-
-
-                          </Input>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label for="exampleSelect">Division</Label>
-                          <Input type="select" name="select" id="exampleSelect"
-                            defaultValue={themes[0].name}
-
-                            onChange={val => setFormData({ ...formData, div_name: val.target.value, ser_name: '' })}
-                          >
-                            {allLevels.divisions.map(div => {
-                              // console.log(theme)
-
-                              if (div.dir_name === formData.dir_name) {
-
-
-                                return <option value={div.name}>
-                                  {div.name}</option>
-
-                              }
-                              return null
-
-                            })}
-
-
-                          </Input>
-                        </FormGroup>
-                        <FormGroup>
-                          <Label for="exampleSelect">Service</Label>
-                          <Input type="select" name="select" id="exampleSelect"
-                            defaultValue={themes[0].name}
-
-                            onChange={val => setFormData({ ...formData, ser_name: val.target.value })}
-                          >
-                            {allLevels.services.map(ser => {
-                              // console.log(ser)
-                              if (ser.div_name === formData.div_name) {
-
-                                return <option value={ser.name}>
-                                  {ser.name}</option>
-
-                              }
-                              return null
-                            })}
+                                  onFocus={(e) => setEmailFocus(true)}
+                                  onBlur={(e) => setEmailFocus(false)}
+                                  onChange={val => setFormData({ ...formData, emailDem: val.target.value })}
+                                />
+                              </InputGroup>
+                            </FormGroup>
+                          </Col>
 
 
-                          </Input>
-                        </FormGroup>
 
-                        <Button className="btn-round" color="primary" size="lg" type={'submit'}>
-                          Appliquer
-                        </Button>
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="exampleSelect">Department</Label>
+                              <Input type="select" name="select" id="exampleSelect"
+                                defaultValue={themes[0].name}
+
+                                onChange={val => setFormData({ ...formData, dep_name: val.target.value, dir_name: '', div_name: '', ser_name: '' })}
+                              >
+                                {allLevels.departments.map(theme => {
+                                  // console.log(theme)
+                                  return <option value={theme.name}>
+                                    {theme.name}</option>
+                                })}
+
+
+                              </Input>
+                            </FormGroup>
+
+                          </Col>
+
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="exampleSelect">Direction</Label>
+                              <Input type="select" name="select" id="exampleSelect"
+                                defaultValue={themes[0].name}
+                                onChange={val => setFormData({ ...formData, dir_name: val.target.value, div_name: '', ser_name: '' })}
+                              >
+                                {allLevels.directions.map(dir => {
+                                  // console.log(dir)
+                                  if (dir.dep_name === formData.dep_name) {
+
+                                    return <option value={dir.name}>
+                                      {dir.name}</option>
+                                  }
+                                  return null
+
+                                })}
+
+
+                              </Input>
+                            </FormGroup>
+
+                          </Col>
+
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="exampleSelect">Division</Label>
+                              <Input type="select" name="select" id="exampleSelect"
+                                defaultValue={themes[0].name}
+
+                                onChange={val => setFormData({ ...formData, div_name: val.target.value, ser_name: '' })}
+                              >
+                                {allLevels.divisions.map(div => {
+                                  // console.log(theme)
+
+                                  if (div.dir_name === formData.dir_name) {
+
+
+                                    return <option value={div.name}>
+                                      {div.name}</option>
+
+                                  }
+                                  return null
+
+                                })}
+
+
+                              </Input>
+                            </FormGroup>
+
+                          </Col>
+
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="exampleSelect">Service</Label>
+                              <Input type="select" name="select" id="exampleSelect"
+                                defaultValue={themes[0].name}
+
+                                onChange={val => setFormData({ ...formData, ser_name: val.target.value })}
+                              >
+                                {allLevels.services.map(ser => {
+                                  // console.log(ser)
+                                  if (ser.div_name === formData.div_name) {
+
+                                    return <option value={ser.name}>
+                                      {ser.name}</option>
+
+                                  }
+                                  return null
+                                })}
+
+
+                              </Input>
+                            </FormGroup>
+
+                          </Col>
+
+                          <Col lg={5}>
+                            <FormGroup>
+                              <Label for="exampleSelect">Theme</Label>
+                              <Input type="select" name="select" id="exampleSelect"
+                                // defaultValue={themes[0].name}
+
+                                onChange={val => setFormData({ ...formData, themeDem: val.target.value })}
+                              >
+                                {themes.map(theme => {
+                                  // console.log(theme)
+                                  return <option value={theme.theme}>
+                                    {theme.theme}</option>
+                                })}
+
+
+                              </Input>
+                            </FormGroup>
+
+                          </Col>
+
+                          {/* {
+                            !showProp ?
+                              <Button className="btn-round" color="defult" size="lg" type={'submit'}>
+                                Appliquer
+                              </Button>
+                              : null
+
+                          } */}
+                        </Row>
+
                       </Form>
+                      <br />
+                      <p onClick={toggle}>Proposer Theme!</p>
+                      {
+                        showProp ?
+                          <Form onSubmit={submitThemeProp}>
+                            <InputGroup
+                              className={classnames({
+                                "input-group-focus": ThemePropFocus,
+                              })}
+                            >
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="tim-icons icon-notes" />
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                placeholder="Theme Titre "
+                                type="text"
+                                onFocus={(e) => setThemePropFocus(true)}
+                                onBlur={(e) => setThemePropFocus(false)}
+                                onChange={val => setThemeProp(val.target.value)}
+
+                              />
+                            </InputGroup>
+                            <Button className="btn-round" color="primary" size="lg" type={'submit'}>
+                              Proposer
+                            </Button>
+
+                          </Form>
+                          : null
+                      }
                     </CardBody>
                     <CardFooter>
 
                     </CardFooter>
                   </Card>
                 </Col>
+                <Col>
+                </Col>
               </Row>
-              <div className="register-bg" />
-              <div
-                className="square square-1"
-                id="square1"
-                style={{ transform: squares1to6 }}
-              />
-              <div
-                className="square square-2"
-                id="square2"
-                style={{ transform: squares1to6 }}
-              />
-              <div
-                className="square square-3"
-                id="square3"
-                style={{ transform: squares1to6 }}
-              />
-              <div
-                className="square square-4"
-                id="square4"
-                style={{ transform: squares1to6 }}
-              />
-              <div
-                className="square square-5"
-                id="square5"
-                style={{ transform: squares1to6 }}
-              />
-              <div
-                className="square square-6"
-                id="square6"
-                style={{ transform: squares1to6 }}
-              />
+              {/* 
+                <div className="register-bg" />
+                <div
+                  className="square square-1"
+                  id="square1"
+                  style={{ transform: squares1to6 }}
+                />
+                <div
+                  className="square square-2"
+                  id="square2"
+                  style={{ transform: squares1to6 }}
+                />
+                <div
+                  className="square square-3"
+                  id="square3"
+                  style={{ transform: squares1to6 }}
+                />
+                <div
+                  className="square square-4"
+                  id="square4"
+                  style={{ transform: squares1to6 }}
+                />
+                <div
+                  className="square square-5"
+                  id="square5"
+                  style={{ transform: squares1to6 }}
+                />
+                <div
+                  className="square square-6"
+                  id="square6"
+                  style={{ transform: squares1to6 }}
+                /> */}
             </Container>
           </div>
         </div>
         <Footer />
       </div>
+
+
+      <Modal isOpen={modal} toggle={toggle} className='modal-theme' style={{ color: '#000' }}>
+        <ModalHeader toggle={toggle}>Proposer Theme</ModalHeader>
+        <ModalBody>
+          <Col lg={8}>
+            <FormGroup >
+              <Label for="propsinput">Theme</Label>
+
+
+              <Input
+                className='input-modal'
+                placeholder="Theme"
+                type="text"
+                id='propsinput'
+                onFocus={(e) => setThemePropFocus(true)}
+                onBlur={(e) => setThemePropFocus(false)}
+                onChange={val => setThemeProp(val.target.value)}
+
+              />
+
+            </FormGroup>
+          </Col>
+
+        </ModalBody>
+        <ModalFooter style={{ display: "flex", justifyContent: 'flex-end' }}>
+          <Button onClick={submitThemeProp} color='info' style={{ margin: '0 15px' }}>Envoyer</Button>
+          <Button color="secondary" onClick={toggle}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 }

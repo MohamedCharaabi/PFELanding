@@ -16,52 +16,21 @@
 
 */
 import React, { useState } from "react";
-import classnames from "classnames";
-import Select from 'react-select'
 
-// reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardImg,
-  CardTitle,
-  Label,
-  FormGroup,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
 
 // core components
 import Footer from "components/Footer/Footer.js";
 import CustomNavbar from "components/Navbars/CustomNavbar";
 import axios from "axios";
-import { handleSuccess, handleError } from "components/SweetAlerts";
-import { selectThemeColors } from "./FormSelectTheme";
+
 import { useParams } from "react-router-dom";
 
 
-const colourOptions = [
-  { value: 'Departments', label: 'Departments' },
-  { value: 'Directions', label: 'Directions' },
-  { value: 'Divisions', label: 'Divisions' },
-  { value: 'Services', label: 'Services' },
-  { value: 'Themes', label: 'Themes' }
-
-]
 
 
 export default function ActivateRequest() {
   const { id } = useParams()
-  const [isLaoding, setIsLoading] = useState(true)
+
   const [request, setRequest] = useState()
   const [squares1to6, setSquares1to6] = React.useState("");
   const [squares7and8, setSquares7and8] = React.useState("");
@@ -124,16 +93,14 @@ export default function ActivateRequest() {
         <div style={{ margin: '150px 100px' }}>
           {/* <span>Quote</span> */}
           <blockquote>
-            <p className="blockquote blockquote-info">
-              "I will be the leader of a company that ends up being worth
-              billions of dollars, because I got the answers. I understand
-              culture. I am the nucleus. I think that’s a responsibility
-              that I have, to push possibilities, to show people, this is
-              the level that things could be at." <br />
+            <p className="blockquote blockquote-info" style={{ color: 'white' }}>
+              Nous sommes heureux de vous annoncer que votre demande est activée maintenant.
               <br />
-              <small>- Noaa</small>
+              Utiliser ce code pour suivre l'état de votre demmande:  <span style={{ color: 'red' }}>{request.code}</span>
+              <br />
+
             </p>
-            <p>This is you code : {request.code} </p>
+
           </blockquote>
         </div>
 

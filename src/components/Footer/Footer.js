@@ -35,7 +35,7 @@ export default function Footer() {
       <Container>
         <Row>
           <Col md="3">
-            <h1 className="title">BLK•</h1>
+            <h1 className="title">PFE-CIMS</h1>
           </Col>
           <Col md="3">
             <Nav>
@@ -45,47 +45,48 @@ export default function Footer() {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/landing-page" tag={Link}>
-                  Landing
+                <NavLink to="/formular" tag={Link}>
+                  Appliquer
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink to="/myrequest" tag={Link}>
+                  MonEtat
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="/register-page" tag={Link}>
-                  Register
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/profile-page" tag={Link}>
-                  Profile
+                <NavLink to="/reclamation" tag={Link}>
+                  Reclamer
                 </NavLink>
               </NavItem>
             </Nav>
           </Col>
-          <Col md="3">
+          <Col md="6">
             <Nav>
               <NavItem>
-                <NavLink href="https://creative-tim.com/contact-us?ref=blkdsr-footer">
-                  Contact Us
-                </NavLink>
+                <Row >
+                  <i className="tim-icons icon-square-pin " style={{ marginRight: '15px' }} />
+                  <span>
+                    1 Rue de libérai 1002, Tunis, Le belvédère</span>
+                </Row>
               </NavItem>
               <NavItem>
-                <NavLink href="https://creative-tim.com/about-us?ref=blkdsr-footer">
-                  About Us
-                </NavLink>
+                <Row >
+                  <i className="tim-icons icon-mobile " style={{ marginRight: '15px' }} />
+                  <span> Tél : +216 71 789 855 /+216 71 113 600
+                    Fax :+216 71 790 440</span>
+                </Row>
               </NavItem>
               <NavItem>
-                <NavLink href="https://creative-tim.com/blog?ref=blkdsr-footer">
-                  Blog
-                </NavLink>
+                <Row >
+                  <i className="tim-icons icon-email-85 " style={{ marginRight: '15px' }} />
+                  <span> cims@rns.tn</span>                </Row>
               </NavItem>
-              <NavItem>
-                <NavLink href="https://opensource.org/licenses/MIT">
-                  License
-                </NavLink>
-              </NavItem>
+
             </Nav>
           </Col>
-          <Col md="3">
+          {/* <Col md="3">
             <h3 className="title">Follow us:</h3>
             <div className="btn-wrapper profile">
               <Button
@@ -126,6 +127,7 @@ export default function Footer() {
               </UncontrolledTooltip>
             </div>
           </Col>
+        */}
         </Row>
       </Container>
     </footer>

@@ -47,6 +47,7 @@ import CustomNavbar from "components/Navbars/CustomNavbar";
 import axios from "axios";
 import { handleSuccess, handleError } from "components/SweetAlerts";
 import { selectThemeColors } from "./FormSelectTheme";
+import { useForm } from "react-hook-form";
 
 
 const colourOptions = [
@@ -69,7 +70,8 @@ export default function ReclamationForm() {
   // const [phoneFocus, setPhoneFocus] = React.useState(false);
   // const [establishmentFocus, setEstablishmentFocus] = React.useState(false);
   // const [passwordFocus, setPasswordFocus] = React.useState(false);
-  const [formData, setFormData] = useState({ nomDem: '', prenomDem: '', emailDem: '', themeDem: '', etatDem: 4, name: 'ser', dep_name: '', dir_name: '', div_name: '', ser_name: '' });
+  const [formData, setFormData] = useState({ by: 'personnel' });
+  const { register, errors, handleSubmit } = useForm()
 
 
 
@@ -103,14 +105,14 @@ export default function ReclamationForm() {
 
 
 
-  async function handleSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
-    await axios.post("https://pfe-cims.herokuapp.com/request", formData, {
-      headers: { "Access-Control-Allow-Origin": "*" }
+    await axios.post("https://pfe-cims.herokuapp.com/alert", formData, {
+      // headers: { "Access-Control-Allow-Origin": "*" }
 
     })
       .then(res => {
-        return handleSuccess({ props: { title: 'Votre demande envoyer ', text: 'svp confirmmer votre email' } });
+        return handleSuccess({ props: { title: 'Votre reclamation envoyer ', text: 'on verra ça au plus vite' } });
       }).catch(err => handleError({ props: { title: 'Error', text: err.message } }));
     // alert('Your form submitted Successfully');
 
@@ -122,53 +124,55 @@ export default function ReclamationForm() {
   return (
     <>
       <CustomNavbar />
-      <div className="wrapper">
-        <div style={{marginRight: '50px'}}>
-        <Card style={{ margin: '150px 100px', marginRight: '50px' }}>
-          <CardHeader>
-            <CardTitle tag='h4'>Envoyer Reclamation </CardTitle>
-          </CardHeader>
+      <div className="wrapper" style={{ margin: '150px 100px', marginRight: '50px' }}>
+        <div >
+          <Card >
+            <CardHeader>
+              <CardTitle tag='h4'>Envoyer Reclamation </CardTitle>
+            </CardHeader>
 
-          <CardBody>
-            <CardText>
-              {/* Use <code>.form-label-group</code> as a wrapper to add a Floating Label with Textarea */}
-            </CardText>
-            <FormGroup>
-              <Label for='firstNameBasic'>Titre</Label>
-              <Input
-                id='firstNameBasic'
-                name='title'
-                // innerRef={register({ required: true })}
-                // invalid={errors.firstNameBasic && true}
-                onChange={e => setFormData({ ...formData, title: e.target.value })}
+            <CardBody>
+              <CardText>
+                {/* Use <code>.form-label-group</code> as a wrapper to add a Floating Label with Textarea */}
+              </CardText>
+              <FormGroup>
+                <Label for='firstNameBasic'>Titre</Label>
+                <Input
+                  id='firstNameBasic'
+                  name='title'
+                  {...register('content', { required: true })}
+                  // invalid={errors. && true}
+                  onChange={e => setFormData({ ...formData, title: e.target.value })}
 
-                placeholder='Titre'
-              />
-            </FormGroup>
+                  placeholder='Titre'
+                />
+                {/* {errors.title && errors.title.message} */}
+              </FormGroup>
 
-            <div className='form-label-group mt-2'>
-              <Input type='textarea'
-                name='content'
-                id='exampleText'
-                rows='3'
-                placeholder='Enter alert'
-                // innerRef={register({ required: true })}
-                // invalid={errors.firstNameBasic && true}
+              <div className='form-label-group mt-2'>
+                <Label>Reclamation</Label>
+                <Input type='textarea'
+                  name='content'
+                  id='exampleText'
+                  rows='5'
+                  placeholder='Enter alert'
+                  {...register('content', { required: true })}
+                  // invalid={errors.firstNameBasic && true}
 
-                onChange={e => setFormData({ ...formData, content: e.target.value })}
-              />
-              <Label>Entrer alert</Label>
-            </div>
+                  onChange={e => setFormData({ ...formData, content: e.target.value })}
+                />
+              </div>
 
-            <Button className='mr-1' color='primary'
-            // type='submit'
-            // onClick={handleSubmit(onSubmit)}
-            >
-              Envoyer
-            </Button>
-          </CardBody>
-        </Card>
-</div>
+              <Button className='mr-1'
+                // color='primary'
+                type='submit'
+                onClick={onSubmit}
+              >
+                Envoyer
+              </Button>
+            </CardBody>
+          </Card>
+        </div>
         <Footer />
       </div>
     </>
