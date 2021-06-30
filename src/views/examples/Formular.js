@@ -47,7 +47,10 @@ import CustomNavbar from "components/Navbars/CustomNavbar";
 import axios from "axios";
 import { handleSuccess, handleError } from "components/SweetAlerts";
 import { selectThemeColors } from "./FormSelectTheme";
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import * as yup from "yup";
+import { ErrorMessage } from '@hookform/error-message';
 
 const colourOptions = [
   { value: 'Departments', label: 'Departments' },
@@ -57,6 +60,12 @@ const colourOptions = [
   { value: 'Themes', label: 'Themes' }
 
 ]
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  lastname: yup.string().required(),
+  email: yup.string().email().required(),
+});
 
 
 export default function Formular(props) {
@@ -83,7 +92,7 @@ export default function Formular(props) {
   const [themeProp, setThemeProp] = useState('')
 
   const [formData, setFormData] = useState({ nomDem: '', prenomDem: '', emailDem: '', themeDem: '', etatDem: 4, name: 'ser', dep_name: '', dir_name: '', div_name: '', ser_name: '' });
-
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   async function loadAllLevels() {
     await axios.get(`https://pfe-cims.herokuapp.com/all`)
@@ -141,21 +150,22 @@ export default function Formular(props) {
   const toggle = () => setModal(!modal);
 
 
-  async function handleSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
-    await axios.post("https://pfe-cims.herokuapp.com/request", formData, {
-      headers: { "Access-Control-Allow-Origin": "*" }
+    console.log(formData)
+     await axios.post("https://pfe-cims.herokuapp.com/request", formData, {
+       headers: { "Access-Control-Allow-Origin": "*" }
 
-    })
-      .then(res => {
-        return handleSuccess({ props: { title: 'Votre demande envoyer ', text: 'svp confirmmer votre email' } });
-      }).catch(err => handleError({ props: { title: 'Error', text: err.message } }));
+     })
+       .then(res => {
+         return handleSuccess({ props: { title: 'Votre demande envoyer ', text: 'Svp confirmmer votre email' } });
+       }).catch(err => handleError({ props: { title: 'Error', text: err.message } }));
     // alert('Your form submitted Successfully');
 
 
-    console.log(formData)
+    //console.log(data)
 
-  }
+  } 
   async function submitThemeProp(event) {
     event.preventDefault();
     await axios.post("https://pfe-cims.herokuapp.com/requesttheme", { theme: themeProp, creator: 'personnel' }, {
@@ -209,7 +219,7 @@ export default function Formular(props) {
                     </CardHeader>
 
                     <CardBody>
-                      <Form className="form" onSubmit={handleSubmit}>
+                      <Form className="form" onSubmit={onSubmit}>
                         <Row>
 
 
@@ -230,14 +240,18 @@ export default function Formular(props) {
                                 <Input
                                   placeholder="Nom"
                                   type="text"
-                                  id='nominput'
+                                  // id='nominput'
+                                  // name='singleErrorInput'
+                                  {...register("nomDem", { required: "This is required." })}
                                   onFocus={(e) => setNameFocus(true)}
                                   onBlur={(e) => setNameFocus(false)}
                                   onChange={val => setFormData({ ...formData, nomDem: val.target.value })}
-
+                                // ref={register}
                                 />
                               </InputGroup>
+                              {errors.nomDem && <p>Last name is required.</p>}
                             </FormGroup>
+
                           </Col>
                           <Col lg={5}>
                             <FormGroup>
@@ -411,14 +425,10 @@ export default function Formular(props) {
 
                           </Col>
 
-                          {/* {
-                            !showProp ?
-                              <Button className="btn-round" color="defult" size="lg" type={'submit'}>
-                                Appliquer
-                              </Button>
-                              : null
+                          <Button className="btn-round" color="defult" size="lg" type={'submit'}>
+                            Appliquer
+                          </Button>
 
-                          } */}
                         </Row>
 
                       </Form>
@@ -446,7 +456,7 @@ export default function Formular(props) {
 
                               />
                             </InputGroup>
-                            <Button className="btn-round" color="primary" size="lg" type={'submit'}>
+                            <Button className="btn-round" color="default" size="lg" type={'submit'}>
                               Proposer
                             </Button>
 
